@@ -28,6 +28,7 @@ export class GameScene extends Phaser.Scene {
         if (this.tileset !== null) {
             this.layer = this.map.createLayer('tileLayer', this.tileset, 0, 0)
             if (this.layer !== null) {
+                this.layer.setOrigin(0.5)
                 this.layer.setCollisionByProperty({ collide: true })
             }
         }
@@ -40,6 +41,7 @@ export class GameScene extends Phaser.Scene {
         this.enemies = this.add.group({
             classType: Enemy,
         })
+
         this.convertObjects()
 
         // collider layer and obstacles
@@ -121,6 +123,9 @@ export class GameScene extends Phaser.Scene {
             }
             return true
         }, this)
+        if (this.enemies.getLength() ==0) {
+            console.log('player Win')
+        }
     }
 
     private convertObjects(): void {

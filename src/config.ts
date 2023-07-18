@@ -5,9 +5,9 @@ import { MenuScene } from './scenes/menu-scene'
 export const GameConfig: Phaser.Types.Core.GameConfig = {
     title: 'Tank',
     version: '2.0',
-    width: 1600,
-    height: 1200,
-    zoom: 0.6,
+    width: window.innerWidth,
+    height: window.innerHeight,
+    zoom: 0.75,
     type: Phaser.AUTO,
     parent: 'game',
     scene: [BootScene, MenuScene, GameScene],

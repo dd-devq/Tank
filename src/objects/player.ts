@@ -35,9 +35,9 @@ export class Player extends Phaser.GameObjects.Image {
 
     private initImage() {
         // variables
-        this.health = 1
+        this.health = 10
         this.lastShoot = 0
-        this.speed = 100
+        this.speed = 200
 
         // image
         this.setOrigin(0.5, 0.5)
@@ -62,12 +62,22 @@ export class Player extends Phaser.GameObjects.Image {
 
         // input
         if (this.scene.input.keyboard !== null) {
+
+        this.rotateKeyLeft = this.scene.input.keyboard.addKey(
+            Phaser.Input.Keyboard.KeyCodes.D
+          )
+          this.rotateKeyRight = this.scene.input.keyboard.addKey(
+            Phaser.Input.Keyboard.KeyCodes.A
+          )
+        }
+        if (this.scene.input.keyboard !== null) {
             this.cursors = this.scene.input.keyboard.createCursorKeys()
             this.shootingKey = this.scene.input.keyboard.addKey(
                 Phaser.Input.Keyboard.KeyCodes.SPACE
             )
         }
 
+        // this.scene.input.on('pointermove', this.updateBarrel, this)
         // physics
         this.scene.physics.world.enable(this)
     }
@@ -102,7 +112,9 @@ export class Player extends Phaser.GameObjects.Image {
             }
 
             this.scene.physics.velocityFromRotation(
-                this.rotation - Math.PI / 2,
+                Phaser.Math.DegToRad(this.angle -90),
+
+                // this.rotation - Math.PI / 2,
                 -this.speed,
                 this.body.velocity
             )
@@ -156,6 +168,23 @@ export class Player extends Phaser.GameObjects.Image {
         else {
             this.body.setVelocity(0, 0)
         }
+
+
+    if (this.rotateKeyLeft.isDown) {
+        this.barrel.rotation -= 0.025
+      } else if (this.rotateKeyRight.isDown) {
+        this.barrel.rotation += 0.025
+      }
+    }
+
+    updateBarrel(pointer: Phaser.Input.Pointer):void {
+
+        const angle = Phaser.Math.Angle.BetweenPoints(
+            this.barrel,
+            pointer
+          )
+          this.barrel.angle = angle
+          
     }
 
     private handleShooting(): void {
@@ -186,7 +215,7 @@ export class Player extends Phaser.GameObjects.Image {
                     })
                 )
 
-                this.lastShoot = this.scene.time.now + 200
+                this.lastShoot = this.scene.time.now + 33
             }
         }
     }
@@ -194,7 +223,7 @@ export class Player extends Phaser.GameObjects.Image {
     private redrawLifebar(): void {
         this.lifeBar.clear()
         this.lifeBar.fillStyle(0xe66a28, 1)
-        this.lifeBar.fillRect(-this.width / 2, this.height / 2, this.width * this.health, 15)
+        this.lifeBar.fillRect(-this.width / 2, this.height / 2, this.width * this.health / 10, 15)
         this.lifeBar.lineStyle(2, 0xffffff)
         this.lifeBar.strokeRect(-this.width / 2, this.height / 2, this.width, 15)
         this.lifeBar.setDepth(1)
