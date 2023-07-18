@@ -88,21 +88,72 @@ export class Player extends Phaser.GameObjects.Image {
     }
 
     private handleInput() {
-        // move tank forward
-        // small corrections with (- MATH.PI / 2) to align tank correctly
         if (this.cursors.up.isDown) {
-            this.scene.physics.velocityFromRotation(
-                this.rotation - Math.PI / 2,
-                this.speed,
-                this.body.velocity
-            )
-        } else if (this.cursors.down.isDown) {
+            if (this.angle <= 180 && this.angle >0) {
+                if (this.angle >= 177) {
+                    this.angle = 180
+                }
+                else {
+                    this.angle += 4.9
+                }
+            }            
+            else if (this.angle <=0) {
+                this.angle -= 5
+            }
+
             this.scene.physics.velocityFromRotation(
                 this.rotation - Math.PI / 2,
                 -this.speed,
                 this.body.velocity
             )
-        } else {
+            console.log(this.angle)
+
+        } else if (this.cursors.down.isDown) {
+            if (this.angle <= 180 && this.angle >0) {
+                if (this.angle >= 177) {
+                    this.angle = 180
+                }
+                else {
+                    this.angle += 4.9
+                }
+            }            
+            else if (this.angle <=0) {
+                this.angle -= 5
+            }
+
+            this.scene.physics.velocityFromRotation(
+                Phaser.Math.DegToRad(this.angle -90),
+                this.speed,
+                this.body.velocity
+            )
+        } else if (this.cursors.right.isDown) {
+
+            if (this.angle > 91 || this.angle <0) {
+                this.angle -= 5
+            }
+
+            this.scene.physics.velocityFromRotation(
+                Phaser.Math.DegToRad(this.angle - 90),
+                +this.speed,
+                this.body.velocity
+            )
+
+        }
+        else if (this.cursors.left.isDown) {
+                console.log(this.angle)
+            if (this.angle < -91 || this.angle >0) {
+                this.angle += 5
+            }
+
+
+            this.scene.physics.velocityFromRotation(
+                Phaser.Math.DegToRad(this.angle + 90),
+                -this.speed,
+                this.body.velocity
+            )
+
+        }
+        else {
             this.body.setVelocity(0, 0)
         }
     }
