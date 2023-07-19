@@ -2,6 +2,7 @@ import { Player } from '../objects/player'
 import { Enemy } from '../objects/enemy'
 import { Obstacle } from '../objects/obstacles/obstacle'
 import { AudioManager } from '../objects/AudioManager'
+import HUD from './HUD-scene'
 
 export class GameScene extends Phaser.Scene {
     private map: Phaser.Tilemaps.Tilemap
@@ -11,8 +12,9 @@ export class GameScene extends Phaser.Scene {
     private player: Player
     private enemies: Phaser.GameObjects.Group
     private obstacles: Phaser.GameObjects.Group
+    private escKey: Phaser.Input.Keyboard.Key
 
-    private target: Phaser.Math.Vector2
+    private initialized = false
 
     constructor() {
         super({
@@ -22,6 +24,19 @@ export class GameScene extends Phaser.Scene {
 
 
     create(): void {
+        if (this.input.keyboard !== null) {
+            this.escKey = this.input.keyboard.addKey(
+                Phaser.Input.Keyboard.KeyCodes.ESC
+            )
+            }
+        if (!this.initialized) {
+
+            this.events.on('outTime', () => {
+                // Lose
+            })
+            this.initialized = true
+        }
+
         AudioManager.Instance.initialize(this)
         
         // create tilemap from tiled JSON
@@ -135,8 +150,11 @@ export class GameScene extends Phaser.Scene {
             return true
         }, this)
 
-        if (this.enemies.getLength() == 0) {
-            console.log('player Win')
+        if (this.enemies.getLength() == 0 || this.escKey.isDown) {
+            AudioManager.Instance.stopAllSound()
+            this.scene.stop('UIScene')
+            this.scene.stop('GameScene')
+            this.scene.start('GameOverScene', {score: (<HUD> this.scene.get('UIScene')).score })
         }
     }
 

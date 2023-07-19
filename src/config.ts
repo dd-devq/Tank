@@ -1,5 +1,6 @@
 import HUD from './scenes/HUD-scene'
 import { BootScene } from './scenes/boot-scene'
+import GameOver from './scenes/game-over-scene'
 import { GameScene } from './scenes/game-scene'
 import { MenuScene } from './scenes/menu-scene'
 import PauseScene from './scenes/pause-scene'
@@ -11,7 +12,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     height: window.innerHeight,
     type: Phaser.AUTO,
     parent: 'game',
-    scene: [BootScene, MenuScene, GameScene, HUD, PauseScene],
+    scene: [BootScene, MenuScene, GameScene, HUD, PauseScene, GameOver],
     input: {
         keyboard: true,
     },

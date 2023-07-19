@@ -1,7 +1,7 @@
 import Button from "../objects/Button"
 
 export default class HUD extends Phaser.Scene {
-    private score: number
+    public score: number
     private scoreText: Phaser.GameObjects.Text
     private displayZone: Phaser.GameObjects.Zone
     private pauseBtn: Button
@@ -12,6 +12,7 @@ export default class HUD extends Phaser.Scene {
 
     create() {
         this.score = 0
+        
         this.displayZone = this.add.zone(0, 0, window.innerWidth, window.innerHeight).setDepth(-1)
         this.scoreText = this.add.text(20, 20, "SCORE - " + this.score.toString(), {
             font: '48px Arial', color: '#000000'
