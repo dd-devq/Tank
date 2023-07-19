@@ -14,6 +14,26 @@
       },
       {
         "type": "image",
+        "key": "settings",
+        "url": "./assets/sprites/Settings.png"
+      },
+      {
+        "type": "image",
+        "key": "continue",
+        "url": "./assets/sprites/Play.png"
+      },
+      {
+        "type": "image",
+        "key": "new",
+        "url": "./assets/sprites/Restart.png"
+      },
+      {
+        "type": "image",
+        "key": "volume",
+        "url": "./assets/sprites/Volume.png"
+      },
+      {
+        "type": "image",
         "key": "tankBlue",
         "url": "./assets/sprites/tank-blue.png"
       },
@@ -81,6 +101,21 @@
         "type": "image",
         "key": "treeLarge",
         "url": "./assets/obstacles/tree-large.png"
+      },
+      {
+        "type": "audio",
+        "key": "shoot",
+        "url": "./assets/Sounds/tank_shooting.wav"
+      },
+      {
+        "type": "audio",
+        "key": "hit",
+        "url": "./assets/Sounds/Explosion.wav"
+      },
+      {
+        "type": "audio",
+        "key": "soundtrack",
+        "url": "./assets/Sounds/soundtrack.mp3"
       }
     ]
   }
