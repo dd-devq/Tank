@@ -19,7 +19,6 @@ export class GameScene extends Phaser.Scene {
         })
     }
 
-    init(): void {}
 
     create(): void {
         // create tilemap from tiled JSON
@@ -28,10 +27,15 @@ export class GameScene extends Phaser.Scene {
         if (this.tileset !== null) {
             this.layer = this.map.createLayer('tileLayer', this.tileset, 0, 0)
             if (this.layer !== null) {
-                this.layer.setOrigin(0.5)
+                this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
+                this.cameras.main.setZoom(1.35)
+
+                this.layer.setOrigin(0)
                 this.layer.setCollisionByProperty({ collide: true })
             }
         }
+
+
 
         this.obstacles = this.add.group({
             classType: Obstacle,
@@ -117,13 +121,14 @@ export class GameScene extends Phaser.Scene {
                         this.player.body.y
                     )
 
-                    ;(<Enemy>enemy).getBarrel().angle =
-                        (angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG
+                        ; (<Enemy>enemy).getBarrel().angle =
+                            (angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG
                 }
             }
             return true
         }, this)
-        if (this.enemies.getLength() ==0) {
+
+        if (this.enemies.getLength() == 0) {
             console.log('player Win')
         }
     }
@@ -180,7 +185,7 @@ export class GameScene extends Phaser.Scene {
         player: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody
     ): void {
         bullet.destroy()
-        ;(<Player>player).updateHealth()
+            ; (<Player>player).updateHealth()
     }
 
     private playerBulletHitEnemy(
@@ -188,6 +193,6 @@ export class GameScene extends Phaser.Scene {
         enemy: Phaser.Tilemaps.Tile | Phaser.Types.Physics.Arcade.GameObjectWithBody
     ): void {
         bullet.destroy()
-        ;(<Enemy>enemy).updateHealth()
+            ; (<Enemy>enemy).updateHealth()
     }
 }

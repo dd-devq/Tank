@@ -121,6 +121,7 @@ export class Enemy extends Phaser.GameObjects.Image {
         } else {
             this.health = 0
             this.active = false
+            this.scene.events.emit('addScore', 10)
         }
     }
 }

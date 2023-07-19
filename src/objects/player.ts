@@ -84,8 +84,6 @@ export class Player extends Phaser.GameObjects.Image {
             this.rightKey = this.scene.input.keyboard.addKey(
                 Phaser.Input.Keyboard.KeyCodes.D
             )
-
-
         }
 
         this.scene.input.on('pointermove', this.updateBarrel, this)
@@ -112,15 +110,15 @@ export class Player extends Phaser.GameObjects.Image {
         if (this.cursors.up.isDown || this.upKey.isDown) {
             this.scene.physics.velocityFromRotation(
                 this.rotation - Math.PI / 2,
-                -this.speed,
+                this.speed,
                 this.body.velocity
             )
 
-        } else if (this.cursors.down.isDown|| this.downKey.isDown) {
+        } else if (this.cursors.down.isDown || this.downKey.isDown) {
 
             this.scene.physics.velocityFromRotation(
                 this.rotation - Math.PI / 2,
-                this.speed,
+                -this.speed,
                 this.body.velocity
             )
         }
@@ -128,9 +126,9 @@ export class Player extends Phaser.GameObjects.Image {
             this.body.setVelocity(0, 0)
         }
 
-        if (this.cursors.left.isDown || this.leftKey.isDown) {
+        if ((this.cursors.left.isDown || this.leftKey.isDown) && ((this.cursors.down.isDown || this.downKey.isDown) || (this.cursors.up.isDown || this.upKey.isDown))) {
             this.rotation += 0.02
-        } else if (this.cursors.right.isDown || this.rightKey.isDown) {
+        } else if ((this.cursors.right.isDown || this.rightKey.isDown) && ((this.cursors.down.isDown || this.downKey.isDown) || (this.cursors.up.isDown || this.upKey.isDown))) {
             this.rotation -= 0.02
         }
 
@@ -138,13 +136,13 @@ export class Player extends Phaser.GameObjects.Image {
 
     updateBarrel(pointer: Phaser.Input.Pointer): void {
         const angle = (pointer.positionToCamera(this.scene.cameras.main) as Phaser.Math.Vector2).subtract(new Phaser.Math.Vector2(this.x, this.y)).angle()
-        this.barrel.rotation = angle + Phaser.Math.PI2/4
+        this.barrel.rotation = angle + Phaser.Math.PI2 / 4
     }
 
     private handleShooting(): void {
-        if ((this.shootingKey.isDown && this.scene.time.now > this.lastShoot)||
-            
-        (this.scene.input.activePointer.isDown && this.scene.time.now > this.lastShoot)) {
+        if ((this.shootingKey.isDown && this.scene.time.now > this.lastShoot) ||
+
+            (this.scene.input.activePointer.isDown && this.scene.time.now > this.lastShoot)) {
             // this.scene.cameras.main.shake(20, 0.005)
             this.scene.tweens.add({
                 targets: this,
