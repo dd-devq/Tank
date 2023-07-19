@@ -1,5 +1,6 @@
 import { Bullet } from './bullet'
 import { IImageConstructor } from '../interfaces/image.interface'
+import { AudioManager } from './AudioManager'
 
 export class Enemy extends Phaser.GameObjects.Image {
     body: Phaser.Physics.Arcade.Body
@@ -100,7 +101,7 @@ export class Enemy extends Phaser.GameObjects.Image {
                     })
                 )
 
-                this.lastShoot = this.scene.time.now + 400
+                this.lastShoot = this.scene.time.now + 600
             }
         }
     }
@@ -122,6 +123,7 @@ export class Enemy extends Phaser.GameObjects.Image {
             this.health = 0
             this.active = false
             this.scene.events.emit('addScore', 10)
+            AudioManager.Instance.playSoundFX('hit', 0.5)
         }
     }
 }

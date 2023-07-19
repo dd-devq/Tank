@@ -2,7 +2,7 @@ export interface IButtonConstructor {
     scene: Phaser.Scene;
     x: number;
     y: number;
-    texture: string[],
+    texture: string,
     textContent:string | undefined
 }
 

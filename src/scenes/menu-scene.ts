@@ -40,6 +40,7 @@ export class MenuScene extends Phaser.Scene {
     update(): void {
         if (this.startKey.isDown) {
             this.scene.start('GameScene')
+            this.scene.launch('UIScene')
         }
     }
 }

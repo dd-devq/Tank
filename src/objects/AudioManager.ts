@@ -21,11 +21,11 @@ export class AudioManager {
         return this.isMuted
     }
 
-    set IsMute(isMuted: boolean) {
+    set IsMuted(isMuted: boolean) {
         this.isMuted = isMuted
         if (this.isMuted) {
-            this.stopBGM()
-            this.stopAllSoundFX()
+            this.pauseAllSound()
+            this.pauseBGM()
         }
     }
 
@@ -33,8 +33,8 @@ export class AudioManager {
         if (this.isMuted) {
             return
         }
-        this.scene.sound.add(audioKey, { volume: volume, loop: isLoop })
-        this.scene.sound.play(audioKey)
+        this.scene.sound.add(audioKey)
+        this.scene.sound.play(audioKey, { volume: volume, loop: isLoop })
     }
 
     public stopSoundFX(audioKey: string): void {
@@ -46,10 +46,17 @@ export class AudioManager {
         })
     }
 
-    public stopAllSoundFX(): void {
+    public stopAllSound(): void {
         const audioList = this.scene.sound.getAllPlaying()
         audioList.forEach((audio) => {
-            audio.stop()
+                audio.stop()
+        })
+    }
+
+    public pauseAllSound(): void {
+        const audioList = this.scene.sound.getAllPlaying()
+        audioList.forEach((audio) => {
+                audio.pause()
         })
     }
 

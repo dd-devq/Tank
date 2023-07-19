@@ -1,5 +1,6 @@
 import { Bullet } from './bullet'
 import { IImageConstructor } from '../interfaces/image.interface'
+import { AudioManager } from './AudioManager'
 
 export class Player extends Phaser.GameObjects.Image {
     body: Phaser.Physics.Arcade.Body
@@ -39,7 +40,7 @@ export class Player extends Phaser.GameObjects.Image {
         // variables
         this.health = 100
         this.lastShoot = 0
-        this.speed = 200
+        this.speed = 225
 
         // image
         this.setOrigin(0.5, 0.5)
@@ -127,9 +128,9 @@ export class Player extends Phaser.GameObjects.Image {
         }
 
         if ((this.cursors.left.isDown || this.leftKey.isDown) && ((this.cursors.down.isDown || this.downKey.isDown) || (this.cursors.up.isDown || this.upKey.isDown))) {
-            this.rotation += 0.02
+            this.rotation += 0.05
         } else if ((this.cursors.right.isDown || this.rightKey.isDown) && ((this.cursors.down.isDown || this.downKey.isDown) || (this.cursors.up.isDown || this.upKey.isDown))) {
-            this.rotation -= 0.02
+            this.rotation -= 0.05
         }
 
     }
@@ -141,9 +142,9 @@ export class Player extends Phaser.GameObjects.Image {
 
     private handleShooting(): void {
         if ((this.shootingKey.isDown && this.scene.time.now > this.lastShoot) ||
-
             (this.scene.input.activePointer.isDown && this.scene.time.now > this.lastShoot)) {
             // this.scene.cameras.main.shake(20, 0.005)
+            AudioManager.Instance.playSoundFX('shoot', 0.1)
             this.scene.tweens.add({
                 targets: this,
                 props: { alpha: 0.8 },

@@ -1,6 +1,7 @@
 import { Player } from '../objects/player'
 import { Enemy } from '../objects/enemy'
 import { Obstacle } from '../objects/obstacles/obstacle'
+import { AudioManager } from '../objects/AudioManager'
 
 export class GameScene extends Phaser.Scene {
     private map: Phaser.Tilemaps.Tilemap
@@ -21,6 +22,8 @@ export class GameScene extends Phaser.Scene {
 
 
     create(): void {
+        AudioManager.Instance.initialize(this)
+        
         // create tilemap from tiled JSON
         this.map = this.make.tilemap({ key: 'levelMap' })
         this.tileset = this.map.addTilesetImage('tiles')
@@ -103,7 +106,10 @@ export class GameScene extends Phaser.Scene {
             }
             return true
         }, this)
-
+        if (AudioManager.Instance.bgm === undefined) {
+            AudioManager.Instance.bgm = this.sound.add('soundtrack')
+        }
+        AudioManager.Instance.playBGM(0.1, true)
         this.cameras.main.startFollow(this.player)
     }
 
@@ -111,6 +117,7 @@ export class GameScene extends Phaser.Scene {
         this.player.update()
 
         this.enemies.children.each((enemy: Phaser.GameObjects.GameObject) => {
+
             enemy.update()
             if (this.player.active && enemy.active) {
                 if (enemy.body !== null) {
