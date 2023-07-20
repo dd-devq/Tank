@@ -9,6 +9,9 @@ export class BootScene extends Phaser.Scene {
     }
 
     preload(): void {
+        if (!localStorage.getItem('tank-highscore')) {
+            localStorage.setItem('tank-highscore', '0')
+        }
         this.cameras.main.setBackgroundColor(0x000000)
         this.createLoadingGraphics()
 
