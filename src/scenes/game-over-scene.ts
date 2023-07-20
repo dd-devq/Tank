@@ -1,5 +1,4 @@
 import Button from "../objects/Button"
-
 export default class GameOver extends Phaser.Scene {
     private score: number
     private gameOverText: Phaser.GameObjects.BitmapText
@@ -28,15 +27,49 @@ export default class GameOver extends Phaser.Scene {
         }).setOrigin(0.5)
 
         const start = { scoreValue: 0 }
-        const end = { scoreValue: this.score}
-        
+        const end = { scoreValue: this.score }
+
         this.tweens.add({
             targets: start,
             scoreValue: end.scoreValue,
-            duration: 1000,
+            duration: 750,
             onUpdate: () => {
-                this.scoreText.setText("Score: " +Math.floor(start.scoreValue).toString())
+                this.scoreText.setText("Score: " + Math.floor(start.scoreValue).toString())
             },
+            // onComplete: ()=>{
+            //     const particles1 = this.add.particles(0, this.cameras.main.height - 100, 'confetti', {
+            //         lifespan: 15000,
+            //         frame: ['red.png', 'yellow.png', 'green.png', 'orange.png', 'blue.png', 'pink.png'],
+            //         angle: { min: 270, max: 360 },
+            //         alpha: {start: 1, end: 0.75},
+            //         speedX: { min: -125, max: 125 },
+            //         speedY: { min: -150, max: -165 },
+            //         gravityY: Phaser.Math.RND.between(45, 75),
+            //         scale: { min: 0.5, max: 3 },
+            //         emitting: true,
+            //         particleClass: Confetti,
+            //     })
+
+            //     particles1.explode(500)
+            //     particles1.setDepth(10)
+
+            //     const particles = this.add.particles(this.cameras.main.width, this.cameras.main.height - 100, 'confetti', {
+            //         lifespan: 15000,
+            //         frame: ['red.png', 'yellow.png', 'green.png', 'orange.png', 'blue.png', 'pink.png'],
+            //         angle: { min: 180, max: 270 },
+            //         alpha: {start: 1, end: 0.75},
+            //         speedX: { min: -125, max: 125 },
+            //         speedY: { min: -150, max: -165 },
+            //         gravityY: Phaser.Math.RND.between(45, 75),
+            //         scale: { min: 0.5, max: 3 },
+            //         emitting: true,
+            //         particleClass: Confetti,
+            //     })
+
+            //     particles.explode(500)
+            //     particles.explode(200)
+            //     particles.setDepth(10)
+            // },
             callbackScope: this,
         })
 
@@ -61,7 +94,7 @@ export default class GameOver extends Phaser.Scene {
             }).setOrigin(0.5)
 
         }
-        
+
 
         this.setupNewBtn()
         Phaser.Display.Align.In.Center(this.displayZone, this.scoreText)
@@ -75,7 +108,7 @@ export default class GameOver extends Phaser.Scene {
         this.newBtn = new Button({
             scene: this,
             x: window.innerWidth / 2,
-            y: window.innerHeight /2 + 50,
+            y: window.innerHeight / 2 + 50,
             texture: "new",
             textContent: undefined
         })
@@ -107,9 +140,13 @@ export default class GameOver extends Phaser.Scene {
                 isActive: true,
                 callback: () => {
                     if (this.newBtn.isOver) {
-                        this.scene.start("GameScene")
-                        this.scene.launch("UIScene")
-                        this.scene.stop()
+                        this.cameras.main.fadeOut(1000, 0, 0, 0)
+                        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+                            this.scene.start("GameScene")
+                            this.scene.launch("UIScene")
+                            this.scene.stop()
+
+                        })
                     }
                     this.newBtn.sprite.clearTint()
                 }
@@ -118,7 +155,7 @@ export default class GameOver extends Phaser.Scene {
         this.newBtn.setupCallback(btnConfig)
 
         Phaser.Display.Align.In.Center(this.displayZone, this.newBtn)
-        
+
         this.tweens.add({
             targets: this.newBtn.sprite,
             scale: 7,

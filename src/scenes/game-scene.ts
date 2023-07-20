@@ -152,9 +152,12 @@ export class GameScene extends Phaser.Scene {
 
         if (this.enemies.getLength() == 0 || this.escKey.isDown) {
             AudioManager.Instance.stopAllSound()
-            this.scene.stop('UIScene')
-            this.scene.stop('GameScene')
-            this.scene.start('GameOverScene', {score: (<HUD> this.scene.get('UIScene')).score })
+            this.cameras.main.fadeOut(1000, 0, 0, 0)
+            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+                this.scene.stop('UIScene')
+                this.scene.stop('GameScene')
+                this.scene.start('GameOverScene', {score: (<HUD> this.scene.get('UIScene')).score })
+            })
         }
     }
 

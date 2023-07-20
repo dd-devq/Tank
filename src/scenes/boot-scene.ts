@@ -30,7 +30,8 @@ export class BootScene extends Phaser.Scene {
             this.progressBar.destroy()
             this.loadingBar.destroy()
         })
-
+        this.load.atlas('confetti', 'assets\\particles\\cofetti.png', 'assets\\particles\\cofetti.json')
+        this.load.atlas('flares', 'assets/particles/flares.png', 'assets/particles/flares.json')
         this.load.pack('preload', './assets/pack.json', 'preload')
     }
 
