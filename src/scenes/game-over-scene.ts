@@ -17,6 +17,7 @@ export default class GameOver extends Phaser.Scene {
     }
 
     create() {
+        this.cameras.main.fadeIn(1000, 0, 0, 0)
 
         this.cameras.main.setBackgroundColor('#ADD8E6')
         const graphics = this.add.graphics()

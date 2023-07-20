@@ -24,6 +24,8 @@ export class GameScene extends Phaser.Scene {
 
 
     create(): void {
+        this.cameras.main.fadeIn(1000, 0, 0, 0)
+
         if (this.input.keyboard !== null) {
             this.escKey = this.input.keyboard.addKey(
                 Phaser.Input.Keyboard.KeyCodes.ESC
