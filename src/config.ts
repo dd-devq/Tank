@@ -3,7 +3,6 @@ import { BootScene } from './scenes/boot-scene'
 import GameOver from './scenes/game-over-scene'
 import { GameScene } from './scenes/game-scene'
 import { MenuScene } from './scenes/menu-scene'
-import PauseScene from './scenes/pause-scene'
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
     title: 'Tank',
@@ -12,7 +11,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     height: window.innerHeight,
     type: Phaser.AUTO,
     parent: 'game',
-    scene: [BootScene, MenuScene, GameScene, HUD, PauseScene, GameOver],
+    scene: [BootScene, MenuScene, GameScene, HUD, GameOver],
     input: {
         keyboard: true,
     },

@@ -6,7 +6,7 @@ export default class Button extends Phaser.GameObjects.Container {
     constructor(btnConstructor:IButtonConstructor) {
         super(btnConstructor.scene, btnConstructor.x, btnConstructor.y)
 
-            this.sprite = this.scene.add.sprite(this.x, this.y, btnConstructor.texture)
+            this.sprite = this.scene.add.sprite(this.x, this.y, btnConstructor.texture).setDepth(5)
             this.add(this.sprite)
             this.scene.add.existing(this.sprite).setScale(3)
 
